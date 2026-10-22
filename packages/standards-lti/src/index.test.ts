@@ -1,0 +1,1 @@
+import {describe,expect,it} from 'vitest';import {mapLtiRole,verifyHmac} from './index';describe('LTI claims',()=>{it('maps IMS roles',()=>{expect(mapLtiRole(['http://purl.imsglobal.org/vocab/lis/v2/membership#Instructor'])).toBe('faculty');expect(mapLtiRole(['Learner'])).toBe('learner');});it('verifies webhook HMAC',()=>expect(verifyHmac('body','bad','secret')).toBe(false));});
