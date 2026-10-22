@@ -1,0 +1,1 @@
+const hits=new Map<string,{count:number;expires:number}>();export function rateLimit(key:string,limit=30,windowMs=60_000){const now=Date.now();const current=hits.get(key);if(!current||current.expires<now){hits.set(key,{count:1,expires:now+windowMs});return true;}if(current.count>=limit)return false;current.count++;return true;}

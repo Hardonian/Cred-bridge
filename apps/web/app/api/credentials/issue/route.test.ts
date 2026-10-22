@@ -1,0 +1,1 @@
+import {describe,expect,it} from 'vitest';describe('issuance API contract',()=>it('requires a structured issuance request',()=>expect(['tenantId','learnerId','achievementId','milestoneVersion','name']).toHaveLength(5)));

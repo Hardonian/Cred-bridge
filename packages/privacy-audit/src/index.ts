@@ -1,0 +1,2 @@
+export type AuditEvent={id:string;tenantId:string;action:string;actorId:string;targetType:string;targetId:string;createdAt:string;metadata:Record<string,string>};
+export function redact(input:Record<string,unknown>):Record<string,unknown>{const secretKeys=new Set(['token','authorization','jwt','apiKey','email','phone']);return Object.fromEntries(Object.entries(input).map(([key,value])=>[key,secretKeys.has(key)?'[REDACTED]':value]));}

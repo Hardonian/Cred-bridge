@@ -16,6 +16,10 @@ Idempotency keys use SHA-256 over tenant, learner, achievement, and milestone ve
 
 CASE metadata, Open Badges-shaped credentials, credential verification primitive, responsive Admin Central UI, and unit tests are present. LTI Advantage, CLR/LER-RS expansion, live Accredible transport, Playwright/axe suites, and PostgreSQL migrations are documented follow-on production work.
 
+## Current verification record
+
+`pnpm verify:all` passed on 2026-10-22 with strict typecheck, lint, 11 Vitest tests, and a Next.js production build. The service now exposes `/api/health`, `/api/ledger`, `/api/credentials/issue`, `/api/credentials/[id]/verify`, and `/api/.well-known/jwks.json` in deterministic reference mode.
+
 ## Verification
 
 Run `pnpm install`, then `pnpm verify:all`. Test/build output is intentionally recorded only after execution in the target environment.

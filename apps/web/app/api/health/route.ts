@@ -1,0 +1,1 @@
+import {NextResponse} from 'next/server';import {ledger} from '../../../lib/store';export async function GET(){return NextResponse.json({status:'ok',service:'credbridge-web',mode:'in-memory-reference',pool:ledger.pool,now:new Date().toISOString()});}

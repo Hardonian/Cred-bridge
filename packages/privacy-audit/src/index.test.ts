@@ -1,0 +1,1 @@
+import {describe,expect,it} from 'vitest';import {redact} from './index';describe('privacy',()=>it('redacts secrets and direct contact data',()=>expect(redact({token:'x',tenantId:'t',email:'x@y'})).toEqual({token:'[REDACTED]',tenantId:'t',email:'[REDACTED]'})));

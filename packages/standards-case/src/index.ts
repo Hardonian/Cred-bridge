@@ -1,0 +1,4 @@
+import type {Competency} from '@credbridge/contracts';
+export type CaseAssociation={uri:string;associationType:'isChildOf'|'exactMatchOf'|'precedes';destinationUri:string};
+export type CasePackage={identifier:string;uri:string;CFDocument:{identifier:string;language:string;title:string};CFItems:Competency[];CFAssociations:CaseAssociation[]};
+export function exportCasePackage(competencies:Competency[]):CasePackage{return {identifier:'credbridge.synthetic.case',uri:'https://credbridge.example/case/package',CFDocument:{identifier:'credbridge.case.1',language:'en,ar',title:'CredBridge Synthetic Competency Framework'},CFItems:competencies,CFAssociations:competencies.slice(1).map((c,i)=>({uri:`https://credbridge.example/case/assoc/${i+1}`,associationType:'isChildOf',destinationUri:`https://credbridge.example/case/${competencies[0]?.id ?? c.id}`}))};}

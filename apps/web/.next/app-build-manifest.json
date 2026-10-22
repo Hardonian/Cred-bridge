@@ -15,12 +15,47 @@
       "static/css/3feb70069c2b6a24.css",
       "static/chunks/app/layout-2078cd82e381fdf1.js"
     ],
+    "/api/credentials/[id]/verify/route": [
+      "static/chunks/webpack-05d6ef26c811722a.js",
+      "static/chunks/d3dc8d93-0480a1acf2866ad1.js",
+      "static/chunks/363-cde4ff967f64da43.js",
+      "static/chunks/main-app-eebed6832a11a00c.js",
+      "static/chunks/app/api/credentials/[id]/verify/route-dd5a2e84b579db0d.js"
+    ],
+    "/api/ledger/route": [
+      "static/chunks/webpack-05d6ef26c811722a.js",
+      "static/chunks/d3dc8d93-0480a1acf2866ad1.js",
+      "static/chunks/363-cde4ff967f64da43.js",
+      "static/chunks/main-app-eebed6832a11a00c.js",
+      "static/chunks/app/api/ledger/route-dd5a2e84b579db0d.js"
+    ],
+    "/api/health/route": [
+      "static/chunks/webpack-05d6ef26c811722a.js",
+      "static/chunks/d3dc8d93-0480a1acf2866ad1.js",
+      "static/chunks/363-cde4ff967f64da43.js",
+      "static/chunks/main-app-eebed6832a11a00c.js",
+      "static/chunks/app/api/health/route-dd5a2e84b579db0d.js"
+    ],
+    "/api/.well-known/jwks.json/route": [
+      "static/chunks/webpack-05d6ef26c811722a.js",
+      "static/chunks/d3dc8d93-0480a1acf2866ad1.js",
+      "static/chunks/363-cde4ff967f64da43.js",
+      "static/chunks/main-app-eebed6832a11a00c.js",
+      "static/chunks/app/api/.well-known/jwks.json/route-dd5a2e84b579db0d.js"
+    ],
+    "/api/credentials/issue/route": [
+      "static/chunks/webpack-05d6ef26c811722a.js",
+      "static/chunks/d3dc8d93-0480a1acf2866ad1.js",
+      "static/chunks/363-cde4ff967f64da43.js",
+      "static/chunks/main-app-eebed6832a11a00c.js",
+      "static/chunks/app/api/credentials/issue/route-dd5a2e84b579db0d.js"
+    ],
     "/page": [
       "static/chunks/webpack-05d6ef26c811722a.js",
       "static/chunks/d3dc8d93-0480a1acf2866ad1.js",
       "static/chunks/363-cde4ff967f64da43.js",
       "static/chunks/main-app-eebed6832a11a00c.js",
-      "static/chunks/app/page-11c90ecbea38250d.js"
+      "static/chunks/app/page-dd5a2e84b579db0d.js"
     ]
   }
 }
