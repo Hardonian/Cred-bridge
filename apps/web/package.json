@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"name":"@credbridge/web","version":"0.1.0","private":true,"scripts":{"dev":"next dev","build":"next build","typecheck":"tsc --noEmit","test":"vitest run"},"dependencies":{"@credbridge/adapter-accredible":"workspace:*","@credbridge/contracts":"workspace:*","@credbridge/credit-ledger":"workspace:*","@credbridge/privacy-audit":"workspace:*","@credbridge/standards-credentials":"workspace:*","next":"^15.0.0","react":"^19.0.0","react-dom":"^19.0.0"},"devDependencies":{"@types/react":"^19.0.0","@types/react-dom":"^19.0.0","typescript":"^5.7.0","vitest":"^3.0.0"}}
+=======
+{"name":"@credbridge/web","version":"0.1.0","private":true,"scripts":{"dev":"next dev","build":"next build","typecheck":"tsc --noEmit","test":"vitest run"},"dependencies":{"@credbridge/contracts":"workspace:*","@credbridge/credit-ledger":"workspace:*","@credbridge/standards-credentials":"workspace:*","next":"^15.0.0","react":"^19.0.0","react-dom":"^19.0.0"},"devDependencies":{"@types/react":"^19.0.0","@types/react-dom":"^19.0.0","typescript":"^5.7.0","vitest":"^5.0.5"}}
+>>>>>>> 03fcf4b8aaf91a767743707ce76670875f08eecc
