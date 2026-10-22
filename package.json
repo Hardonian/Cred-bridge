@@ -1,0 +1,19 @@
+{
+  "name": "credbridge",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@11.8.0",
+  "scripts": {
+    "dev": "pnpm --filter @credbridge/web dev",
+    "build": "pnpm --filter @credbridge/web build",
+    "lint": "pnpm exec eslint .",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "test:contract": "pnpm --filter @credbridge/contracts test",
+    "db:generate": "pnpm --filter @credbridge/db generate",
+    "db:migrate": "pnpm --filter @credbridge/db migrate",
+    "db:seed": "pnpm --filter @credbridge/db seed",
+    "verify:all": "pnpm lint && pnpm typecheck && pnpm test && pnpm build"
+  },
+  "devDependencies": { "@types/node": "^22.0.0", "@types/react": "^19.0.0", "@types/react-dom": "^19.0.0", "eslint": "^9.0.0", "typescript": "^5.7.0", "vitest": "^3.0.0" }
+}

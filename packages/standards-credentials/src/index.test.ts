@@ -1,0 +1,2 @@
+import {describe,expect,it} from 'vitest'; import {mintAchievement,verifyCredential} from './index'; import {competencies} from '@credbridge/contracts';
+describe('credentials',()=>it('mints and verifies an OB3-shaped credential',()=>{const c=mintAchievement({credentialId:'demo-1',learnerId:'learner-1',achievementId:'venture',name:'Venture Validation',description:'Synthetic milestone',competencies,evidenceId:'evidence-1'}); expect(c.type).toContain('OpenBadgeCredential'); expect(verifyCredential(c)).toBe(true);}));
