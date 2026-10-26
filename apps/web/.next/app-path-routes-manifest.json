@@ -1,9 +1,9 @@
 {
-  "/_not-found/page": "/_not-found",
+  "/api/.well-known/jwks.json/route": "/api/.well-known/jwks.json",
+  "/api/health/route": "/api/health",
   "/api/credentials/[id]/verify/route": "/api/credentials/[id]/verify",
   "/api/ledger/route": "/api/ledger",
-  "/api/health/route": "/api/health",
-  "/api/.well-known/jwks.json/route": "/api/.well-known/jwks.json",
   "/api/credentials/issue/route": "/api/credentials/issue",
+  "/_not-found/page": "/_not-found",
   "/page": "/"
 }
