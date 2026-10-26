@@ -102,6 +102,10 @@ importers:
         version: 3.2.7(@types/node@22.20.5)
 
   packages/db:
+    dependencies:
+      '@credbridge/contracts':
+        specifier: workspace:*
+        version: link:../contracts
     devDependencies:
       typescript:
         specifier: ^5.7.0
