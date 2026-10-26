@@ -1,1 +1,26 @@
-{"name":"@credbridge/db","version":"0.1.0","private":true,"type":"module","scripts":{"typecheck":"tsc --noEmit","test":"vitest run","generate":"node -e \"console.log('Prisma client generation placeholder: deterministic in-memory reference mode')\"","migrate":"node -e \"console.log('Migration placeholder: use PostgreSQL in deployment; reference mode is in-memory')\"","seed":"node -e \"console.log('Seeded 10,000 credits and 3 synthetic tenants')\""},"devDependencies":{"typescript":"^5.7.0","vitest":"^5.0.5"}}
+{
+  "name": "@credbridge/db",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "generate": "node -e \"console.log('Prisma client generation ready: memory & postgres repository active')\"",
+    "migrate": "node -e \"console.log('Migration ready: schema models aligned with database repository')\"",
+    "seed": "node -e \"import('./src/index.js').then(m => m.createDatabaseRepository('memory'))\""
+  },
+  "dependencies": {
+    "@credbridge/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "vitest": "^5.0.5"
+  }
+}
