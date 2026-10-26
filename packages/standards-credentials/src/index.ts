@@ -20,6 +20,8 @@ export function generateEd25519KeyPair(keyId = 'credbridge-ed25519-1'): Ed25519K
   return { publicKey, privateKey, keyId };
 }
 
+import { gzipSync, gunzipSync } from 'node:zlib';
+
 export function exportPublicJwk(key: KeyObject, keyId = 'credbridge-key-1') {
   const jwk = key.export({ format: 'jwk' });
   return {
@@ -28,6 +30,89 @@ export function exportPublicJwk(key: KeyObject, keyId = 'credbridge-key-1') {
     alg: 'EdDSA',
     ...jwk,
   };
+}
+
+export interface DidDocument {
+  '@context': string[];
+  id: string;
+  verificationMethod: Array<{
+    id: string;
+    type: string;
+    controller: string;
+    publicKeyJwk: Record<string, unknown>;
+  }>;
+  authentication: string[];
+  assertionMethod: string[];
+}
+
+export function exportDidDocument(
+  publicKey: KeyObject,
+  did = 'did:web:credbridge.example',
+  keyId = 'key-1'
+): DidDocument {
+  const keyUri = `${did}#${keyId}`;
+  const jwk = exportPublicJwk(publicKey, keyId);
+  return {
+    '@context': [
+      'https://www.w3.org/ns/did/v1',
+      'https://w3id.org/security/suites/jws-2020/v1',
+      'https://w3id.org/security/suites/ed25519-2020/v1',
+    ],
+    id: did,
+    verificationMethod: [
+      {
+        id: keyUri,
+        type: 'JsonWebKey2020',
+        controller: did,
+        publicKeyJwk: jwk,
+      },
+    ],
+    authentication: [keyUri],
+    assertionMethod: [keyUri],
+  };
+}
+
+export function generateBitstringStatusList(
+  totalBits = 1024,
+  revokedIndices: number[] = []
+): {
+  type: string;
+  statusPurpose: 'revocation';
+  encodedList: string;
+  totalEntries: number;
+} {
+  const byteLength = Math.ceil(totalBits / 8);
+  const buffer = Buffer.alloc(byteLength, 0);
+  for (const idx of revokedIndices) {
+    if (idx >= 0 && idx < totalBits) {
+      const byteIdx = Math.floor(idx / 8);
+      const bitIdx = idx % 8;
+      buffer[byteIdx]! |= 1 << (7 - bitIdx);
+    }
+  }
+  const compressed = gzipSync(buffer);
+  return {
+    type: 'StatusList2021',
+    statusPurpose: 'revocation',
+    encodedList: compressed.toString('base64url'),
+    totalEntries: totalBits,
+  };
+}
+
+export function checkBitstringRevocation(
+  encodedList: string,
+  index: number
+): boolean {
+  try {
+    const compressed = Buffer.from(encodedList, 'base64url');
+    const buffer = gunzipSync(compressed);
+    const byteIdx = Math.floor(index / 8);
+    const bitIdx = index % 8;
+    if (byteIdx >= buffer.length) return false;
+    return (buffer[byteIdx]! & (1 << (7 - bitIdx))) !== 0;
+  } catch {
+    return false;
+  }
 }
 
 export type AchievementCredential = {

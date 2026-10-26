@@ -14,6 +14,7 @@
     "@credbridge/credit-ledger": "workspace:*",
     "@credbridge/db": "workspace:*",
     "@credbridge/privacy-audit": "workspace:*",
+    "@credbridge/standards-case": "workspace:*",
     "@credbridge/standards-credentials": "workspace:*",
     "@credbridge/standards-lti": "workspace:*",
     "next": "^15.0.0",

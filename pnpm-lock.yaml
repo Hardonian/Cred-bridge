@@ -44,6 +44,9 @@ importers:
       '@credbridge/privacy-audit':
         specifier: workspace:*
         version: link:../../packages/privacy-audit
+      '@credbridge/standards-case':
+        specifier: workspace:*
+        version: link:../../packages/standards-case
       '@credbridge/standards-credentials':
         specifier: workspace:*
         version: link:../../packages/standards-credentials

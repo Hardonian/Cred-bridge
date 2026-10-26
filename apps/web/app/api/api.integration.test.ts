@@ -4,11 +4,18 @@ import { GET as verifyGet } from './credentials/[id]/verify/route';
 import { POST as revokePost } from './credentials/[id]/revoke/route';
 import { GET as statusGet } from './credentials/[id]/status/route';
 import { GET as jwksGet } from './.well-known/jwks.json/route';
+import { GET as didGet } from './.well-known/did.json/route';
+import { GET as statusListGet } from './credentials/status-list/route';
 import { GET as healthGet } from './health/route';
 import { GET as ledgerGet } from './ledger/route';
 import { GET as clrGet } from './learners/[id]/clr/route';
 import { GET as lerRsGet } from './learners/[id]/ler-rs/route';
 import { POST as simulationWebhookPost } from './simulations/webhook/route';
+import { GET as caseFrameworksGet } from './case/frameworks/route';
+import { GET as casePackageGet } from './case/packages/[id]/route';
+import { GET as ltiLoginGet } from './lti/login/route';
+import { POST as ltiDeepLinkPost } from './lti/deep-link/route';
+import { POST as forecastPost } from './ledger/forecast/route';
 import { createHmac } from 'node:crypto';
 
 describe('Web API Routes Integration', () => {
@@ -28,6 +35,81 @@ describe('Web API Routes Integration', () => {
     expect(data.keys[0].kty).toBe('OKP');
     expect(data.keys[0].crv).toBe('Ed25519');
     expect(data.keys[0].alg).toBe('EdDSA');
+  });
+
+  it('GET /api/.well-known/did.json returns W3C did:web document', async () => {
+    const res = await didGet();
+    const data = await res.json();
+    expect(res.status).toBe(200);
+    expect(data.id).toBe('did:web:credbridge.example');
+    expect(data.verificationMethod).toHaveLength(1);
+    expect(data.assertionMethod).toContain('did:web:credbridge.example#key-1');
+  });
+
+  it('GET /api/credentials/status-list returns W3C StatusList2021 bitstring', async () => {
+    const res = await statusListGet();
+    const data = await res.json();
+    expect(res.status).toBe(200);
+    expect(data.type).toContain('StatusList2021Credential');
+    expect(data.credentialSubject.type).toBe('StatusList2021');
+    expect(typeof data.credentialSubject.encodedList).toBe('string');
+  });
+
+  it('GET /api/case/frameworks and /api/case/packages/[id] return CASE 1.1 packages', async () => {
+    const listRes = await caseFrameworksGet();
+    const listData = await listRes.json();
+    expect(listRes.status).toBe(200);
+    expect(listData.standard).toBe('CASE 1.1');
+    expect(listData.frameworks.length).toBeGreaterThanOrEqual(3);
+
+    const pkgRes = await casePackageGet(new Request('http://localhost'), {
+      params: Promise.resolve({ id: 'wil-workplace' }),
+    });
+    const pkgData = await pkgRes.json();
+    expect(pkgRes.status).toBe(200);
+    expect(pkgData.CFDocument.identifier).toBe('credbridge.case.1');
+    expect(pkgData.CFItems.length).toBeGreaterThan(0);
+  });
+
+  it('LTI 1.3 endpoints: GET /api/lti/login and POST /api/lti/deep-link', async () => {
+    const loginReq = new Request(
+      'http://localhost/api/lti/login?iss=https://canvas.example.edu&login_hint=user-42'
+    );
+    const loginRes = await ltiLoginGet(loginReq);
+    expect(loginRes.status).toBe(302);
+    const location = loginRes.headers.get('location') || '';
+    expect(location).toContain('https://canvas.example.edu/api/lti/authorize');
+    expect(location).toContain('login_hint=user-42');
+
+    const dlReq = new Request('http://localhost/api/lti/deep-link', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ deploymentId: 'dep-canvas-99' }),
+    });
+    const dlRes = await ltiDeepLinkPost(dlReq);
+    expect(dlRes.status).toBe(200);
+    const dlData = await dlRes.json();
+    expect(dlData['https://purl.imsglobal.org/spec/lti/claim/message_type']).toBe(
+      'LtiDeepLinkingResponse'
+    );
+  });
+
+  it('POST /api/ledger/forecast models multi-month contract and margin projections', async () => {
+    const req = new Request('http://localhost/api/ledger/forecast', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        months: 12,
+        initialMonthlyLearners: 500,
+        licensePricePerLearner: 60,
+      }),
+    });
+    const res = await forecastPost(req);
+    expect(res.status).toBe(200);
+    const data = await res.json();
+    expect(data.success).toBe(true);
+    expect(data.forecast.points).toHaveLength(12);
+    expect(data.forecast.totalRevenue).toBeGreaterThan(0);
   });
 
   it('Full issuance, verification, status, CLR, and revocation lifecycle', async () => {
