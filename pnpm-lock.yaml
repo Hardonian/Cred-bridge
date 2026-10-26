@@ -38,6 +38,9 @@ importers:
       '@credbridge/credit-ledger':
         specifier: workspace:*
         version: link:../../packages/credit-ledger
+      '@credbridge/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@credbridge/privacy-audit':
         specifier: workspace:*
         version: link:../../packages/privacy-audit
