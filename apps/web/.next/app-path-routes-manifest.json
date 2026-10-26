@@ -1,9 +1,0 @@
-{
-  "/api/.well-known/jwks.json/route": "/api/.well-known/jwks.json",
-  "/api/health/route": "/api/health",
-  "/api/credentials/[id]/verify/route": "/api/credentials/[id]/verify",
-  "/api/ledger/route": "/api/ledger",
-  "/api/credentials/issue/route": "/api/credentials/issue",
-  "/_not-found/page": "/_not-found",
-  "/page": "/"
-}
